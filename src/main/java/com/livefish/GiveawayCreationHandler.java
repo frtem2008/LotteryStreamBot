@@ -37,7 +37,7 @@ public class GiveawayCreationHandler {
                     properties.getProperty("participate_button_text"),
                     "participate"
             ));
-            bot.execute(message);
+            return bot.execute(message);
         } else {
             SendPhoto photo = new SendPhoto();
             photo.setPhoto(new InputFile(photos.get(photos.size() - 1).getFileId()));
