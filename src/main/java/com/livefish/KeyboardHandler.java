@@ -74,7 +74,6 @@ public class KeyboardHandler {
 
             case "send_yes" -> {
                 try {
-                    giveawayChannelId = bot.lastChannel;
                     giveawayCreationHandler.sendGiveawayToChannel(
                             bot.lastPhotos, bot.lastCaption, "@" + bot.lastChannel);
                     bot.sendMessage(properties.getProperty("giveaway_sent"), chatId,
