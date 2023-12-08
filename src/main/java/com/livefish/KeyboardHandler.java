@@ -19,7 +19,7 @@ public class KeyboardHandler {
     private final GiveawayCreationHandler giveawayCreationHandler;
     private final Properties properties;
 
-    private Message userMenuMsg;
+    private Message userMenuMsg, giveawayMessage;
     private final GiveawayHandler giveawayHandler;
     private int page = 0;
 
@@ -74,8 +74,9 @@ public class KeyboardHandler {
 
             case "send_yes" -> {
                 try {
-                    giveawayCreationHandler.sendGiveawayToChannel(
+                    giveawayMessage = giveawayCreationHandler.sendGiveawayToChannel(
                             bot.lastPhotos, bot.lastCaption, "@" + bot.lastChannel);
+
                     bot.sendMessage(properties.getProperty("giveaway_sent"), chatId,
                             createSingleButton(properties.getProperty("button_manage_users"), "manage_users"));
                 } catch (TelegramApiException e) {
@@ -142,6 +143,11 @@ public class KeyboardHandler {
 
             case "confirm" -> {
                 bot.sendMessage(properties.getProperty("winner"), chatId, null);
+                EditMessageReplyMarkup edit = new EditMessageReplyMarkup();
+                edit.setChatId(String.valueOf(giveawayMessage.getChatId()));
+                edit.setMessageId(giveawayMessage.getMessageId());
+                edit.setReplyMarkup(createSingleButton(properties.getProperty("giveaway_ended"), "ignored"));
+                bot.execute(edit);
             }
 
             default -> {

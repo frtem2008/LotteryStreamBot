@@ -28,7 +28,7 @@ public class GiveawayCreationHandler {
         bot.state = State.QUERY_CHANNEL;
     }
 
-    public void sendGiveawayToChannel(List<PhotoSize> photos, String caption, String channelLink) throws TelegramApiException {
+    public Message sendGiveawayToChannel(List<PhotoSize> photos, String caption, String channelLink) throws TelegramApiException {
         if (photos == null) {
             SendMessage message = new SendMessage();
             message.setChatId(channelLink);
@@ -47,7 +47,7 @@ public class GiveawayCreationHandler {
                     properties.getProperty("participate_button_text"),
                     "participate"
             ));
-            bot.execute(photo);
+            return bot.execute(photo);
         }
     }
 
